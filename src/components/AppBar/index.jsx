@@ -9,6 +9,7 @@ import TextField from '@mui/material/TextField'
 import Badge from '@mui/material/Badge'
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone'
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline'
+import AddToPhotosIcon from '@mui/icons-material/AddToPhotos'
 import Tooltip from '@mui/material/Tooltip'
 import Workspace from './Menus/Workspace'
 import Recent from './Menus/Recent'
@@ -40,13 +41,26 @@ function AppBar() {
           <Recent />
           <Starred />
           <Templates />
-          <Button variant='outlined'>
+          <Button variant='outlined' endIcon={<AddToPhotosIcon />} >
             Create
           </Button>
         </Box>
       </Box>
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
-        <TextField id="outlined-search" label="Search..." type="search" size='small' sx={{ minWidth: 120 }}/>
+        <TextField 
+          id="outlined-search"
+          label="Search..."
+          type="search"
+          size='small'
+          sx={{
+            minWidth: 120,
+            '& .MuiInputBase-root': {
+              height: '36px'
+            },
+            '& .MuiInputBase-input': {
+              py: '8px'
+            }
+          }}/>
         <ModeSelect />
         <Tooltip title="Notification">
           <Badge color="primary" variant="dot">

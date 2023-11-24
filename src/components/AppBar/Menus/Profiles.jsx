@@ -31,7 +31,7 @@ function Profiles() {
           aria-haspopup="true"
           aria-expanded={open ? 'true' : undefined}
         >
-          <Avatar sx={{ width: 32, height: 32 }} alt='Vanh' src='https://p16-sign-useast2a.tiktokcdn.com/tos-useast2a-avt-0068-giso/6dae14a4f73db136ebabfac41dc32877~c5_100x100.jpeg?x-expires=1700931600&x-signature=FWmK9yEpy9uEK0s8Xoslh%2Flh%2FPM%3D'/>
+          <Avatar sx={{ width: 28, height: 28 }} alt='Vanh' src='https://p16-sign-useast2a.tiktokcdn.com/tos-useast2a-avt-0068-giso/6dae14a4f73db136ebabfac41dc32877~c5_100x100.jpeg?x-expires=1700931600&x-signature=FWmK9yEpy9uEK0s8Xoslh%2Flh%2FPM%3D'/>
         </IconButton>
       </Tooltip>
       <Menu

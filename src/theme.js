@@ -4,7 +4,7 @@ import { experimental_extendTheme as extendTheme } from '@mui/material/styles'
 const theme = extendTheme({
   trello: {
     navBarHeight: '54px',
-    boardBarHeight: '60px'
+    boardBarHeight: '62px'
   },
   components: {
     MuiButton: {
