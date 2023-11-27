@@ -10,22 +10,42 @@ import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Avatar from '@mui/material/Avatar'
 import AvatarGroup from '@mui/material/AvatarGroup'
+import TextField from '@mui/material/TextField'
+import { useState } from 'react'
+import { Tooltip } from '@mui/material'
+
 
 const CHIP_STYLE = {
-  color: 'primary.main',
-  bgcolor: 'white',
+  color: 'white',
+  bgcolor: 'transparent',
   border: 'none',
   px: '5px',
   borderRadius: '4px',
   '& .MuiSvgIcon-root': {
-    color: 'primary.main'
+    color: 'white'
   },
   '&:hover': {
-    bgcolor: 'primary.50'
+    bgcolor: '#A6C5E229'
   }
 }
 
 function BoardBar() {
+  const [isEditing, setIsEditing] = useState(false)
+  const [boardTitle, setBoardTitle] = useState('Vanhnddev Board')
+
+  const handleClick = () => {
+    setIsEditing(true)
+  }
+
+  const handleBlur = () => {
+    setIsEditing(false)
+  }
+
+  const handleChange = (e) => {
+    setBoardTitle(e.target.value)
+  }
+
+
   return (
     <Box sx={{
       width: '100%',
@@ -36,22 +56,42 @@ function BoardBar() {
       px: 2,
       gap: 2,
       overflowX: 'auto',
-      borderTop: '1px solid aqua',
-      backgroundColor: 'rgba(0, 0, 0, .1)'
+      borderTop: '1px solid gray',
+      backgroundColor: 'rgba(0, 0, 0, .3)'
     }}>
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-        <Chip
-          sx={CHIP_STYLE}
-          icon={<DashboardIcon />}
-          label="Vanhnddev Board"
-          clickable />
+        <Box>
+          {isEditing ? (
+            <TextField
+              autoFocus
+              hiddenLabel
+              id="filled-hidden-label-small"
+              value={boardTitle}
+              onBlur={handleBlur}
+              onChange={handleChange}
+              variant="filled"
+              size="small"
+              sx={{
+                '& input': { color: 'white' }
+              }}
+            />
+          ) : (
+            <Chip
+              sx={CHIP_STYLE}
+              icon={<DashboardIcon />}
+              label={boardTitle}
+              clickable
+              onClick={handleClick}
+            />
+          )}
+        </Box>
         <Button sx={{ '& .MuiButtonBase-root': {
           minWidth: 'min-content',
           width: 24,
           height: 24,
           p: 0
         } }}>
-          <StarBorderIcon />
+          <StarBorderIcon sx={{ color: 'white' }} />
         </Button>
         <Chip
           sx={CHIP_STYLE}
@@ -63,6 +103,14 @@ function BoardBar() {
           icon={<AddToDriveIcon />}
           label="Add to Google Drive"
           clickable />
+        {/* <Button sx={CHIP_STYLE} variant='text' startIcon={<PersonAddIcon />} >
+          Public/Private Workspace
+          </Button>
+          <Button sx={CHIP_STYLE} variant='text' startIcon={<PersonAddIcon />} >
+          Add to Google Drive
+        </Button> */}
+      </Box>
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
         <Chip
           sx={CHIP_STYLE}
           icon={<BoltIcon />}
@@ -73,24 +121,52 @@ function BoardBar() {
           icon={<FilterListIcon />}
           label="Filter"
           clickable />
-      </Box>
-      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
-        <Button variant='outlined' startIcon={<PersonAddIcon />} >
-            Invite
+        {/* <Button sx={CHIP_STYLE} variant='text' startIcon={<PersonAddIcon />} >
+          Automation
+        </Button>
+        <Button sx={CHIP_STYLE} variant='text' startIcon={<PersonAddIcon />} >
+          Filter
+        </Button> */}
+        <Box
+          sx={{
+            borderLeft: '1px solid gray',
+            height: 16,
+            margin: '8 4'
+          }}></Box>
+        <Button
+          variant='text'
+          startIcon={<PersonAddIcon />}
+          sx={{
+            color: '#172b4d',
+            bgcolor: '#DFE1E6',
+            padding: '6px 12px',
+            '&:hover ': { bgcolor: 'white' }
+          }} >
+          Invite
         </Button>
         <AvatarGroup
           sx={{
+            gap: 0.5,
             '& .MuiAvatar-root': {
               width: 34,
               height: 34,
-              fontSize: 16
+              fontSize: 16,
+              border: 'none'
             }
           }}
           total={10} >
-          <Avatar alt="Remy Sharp" src='https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29ufGVufDB8fDB8fHww' />
-          <Avatar alt="Travis Howard" src='https://images.unsplash.com/photo-1599566150163-29194dcaad36?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fHBlcnNvbnxlbnwwfHwwfHx8MA%3D%3D' />
-          <Avatar alt="Agnes Walker" src='https://images.unsplash.com/photo-1554151228-14d9def656e4?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cGVyc29ufGVufDB8fDB8fHww' />
-          <Avatar alt="Trevor Henderson" src='https://images.unsplash.com/photo-1524250502761-1ac6f2e30d43?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDB8fHdvbWFufGVufDB8fDB8fHww' />
+          <Tooltip title='Remy Sharp'>
+            <Avatar alt="Remy Sharp" src='https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29ufGVufDB8fDB8fHww' />
+          </Tooltip>
+          <Tooltip title='Travis Howard'>
+            <Avatar alt="Travis Howard" src='https://images.unsplash.com/photo-1599566150163-29194dcaad36?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fHBlcnNvbnxlbnwwfHwwfHx8MA%3D%3D' />
+          </Tooltip>
+          <Tooltip title='Agnes Walker'>
+            <Avatar alt="Agnes Walker" src='https://images.unsplash.com/photo-1554151228-14d9def656e4?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cGVyc29ufGVufDB8fDB8fHww' />
+          </Tooltip>
+          <Tooltip title='Trevor Henderson'>
+            <Avatar alt="Trevor Henderson" src='https://images.unsplash.com/photo-1524250502761-1ac6f2e30d43?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDB8fHdvbWFufGVufDB8fDB8fHww' />
+          </Tooltip>
         </AvatarGroup>
       </Box>
     </Box>

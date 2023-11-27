@@ -4,7 +4,7 @@ import AppBar from '~/components/AppBar'
 import BoardBar from './BoardBar'
 import BoardContent from './BoardContent'
 import Box from '@mui/material/Box'
-import bg from '~/assets/bg1.png'
+import bg from '~/assets/bg2.png'
 
 function Board() {
   return (
