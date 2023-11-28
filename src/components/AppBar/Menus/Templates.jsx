@@ -23,7 +23,12 @@ function Templates() {
   return (
     <Box>
       <Button
-        sx={{ color: 'white' }}
+        sx={{
+          color: (theme) => (theme.palette.mode === 'dark' ? '#9fadbc' : 'white'),
+          '&:hover': {
+            bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#a6c5e229' : '')
+          }
+        }}
         id="basic-button-templates"
         aria-controls={open ? 'basic-menu-templates' : undefined}
         aria-haspopup="true"

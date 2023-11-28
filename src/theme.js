@@ -1,12 +1,22 @@
 // import { cyan, deepPurple, lightGreen, teal } from '@mui/material/colors'
 import { experimental_extendTheme as extendTheme } from '@mui/material/styles'
 
+const APP_BAR_HEIGHT = '54px'
+const BOARD_BAR_HEIGHT = '62px'
+const BOARD_CONTENT_HEIGHT = `calc(100vh - ${APP_BAR_HEIGHT} - ${BOARD_BAR_HEIGHT} - 12px)`
+const COLUMN_HEADER_HEIGHT = '46px'
+const COLUMN_FOOTER_HEIGHT = '48px'
+
 const theme = extendTheme({
   trello: {
-    appBarHeight: '54px',
-    boardBarHeight: '62px'
+    appBarHeight: APP_BAR_HEIGHT,
+    boardBarHeight: BOARD_BAR_HEIGHT,
+    boardContentHeight: BOARD_CONTENT_HEIGHT,
+    columnHeaderHeight: COLUMN_HEADER_HEIGHT,
+    columnFooterHeight: COLUMN_FOOTER_HEIGHT
   },
   typography: {
+    fontSize: 14,
     fontFamily: [
       '-apple-system',
       'BlinkMacSystemFont',
@@ -25,11 +35,11 @@ const theme = extendTheme({
       styleOverrides: {
         body: {
           '*::-webkit-scrollbar': {
-            width: '4px',
-            height: '4px'
+            width: '8px',
+            height: '8px'
           },
           '*::-webkit-scrollbar-thumb': {
-            // backgroundColor: ''
+            backgroundColor: '#C5C9D1',
             borderRadius: '4px'
           },
           '*::-webkit-scrollbar-thumb:hover': {
@@ -42,20 +52,8 @@ const theme = extendTheme({
       styleOverrides: {
         root: {
           textTransform: 'none',
-          fontWeight: 'normal',
-          lineHeight: 1.5
-          // fontFamily: [
-          //   '-apple-system',
-          //   'BlinkMacSystemFont',
-          //   '"Segoe UI"',
-          //   'Roboto',
-          //   '"Helvetica Neue"',
-          //   'Arial',
-          //   'sans-serif',
-          //   '"Apple Color Emoji"',
-          //   '"Segoe UI Emoji"',
-          //   '"Segoe UI Symbol"'
-          // ].join(',')
+          fontWeight: 500,
+          lineHeight: '22px'
         }
       }
     },
@@ -64,6 +62,14 @@ const theme = extendTheme({
         root: ({ theme }) => ({
           // color: theme.palette.primary.main,
           fontSize: '0.875rem'
+        })
+      }
+    },
+    MuiTypography: {
+      styleOverrides: {
+        root: ({ theme }) => ({
+          color: theme.palette.mode === 'dark' ? '#b6c2cf' : '',
+          '&.MuiTypography-body1': { fontSize: '0.875rem' }
         })
       }
     },
@@ -84,6 +90,29 @@ const theme = extendTheme({
           '&:hover fieldset': { borderWidth: '1px !important' },
           '&.Mui-focused': { borderWidth: '1px !important' }
         })
+      }
+    },
+    MuiCard: {
+      styleOverrides: {
+        root: {
+          boxShadow: '0px 1px 1px #091E4240, 0px 0px 1px #091E424F'
+        }
+      }
+    },
+    MuiCardMedia: {
+      styleOverrides: {
+        root: {
+          borderTopLeftRadius: '8px',
+          borderTopRightRadius: '8px'
+        }
+      }
+    },
+    MuiCardContent: {
+      styleOverrides: {
+        root: {
+          padding: '8px 12px 4px',
+          '&:last-child': { paddingBottom: '4px' }
+        }
       }
     }
   },

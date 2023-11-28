@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import Box from '@mui/material/Box'
 import AppsIcon from '@mui/icons-material/Apps'
-import ModeSelect from '~/components/ModeSelect'
+import ModeSelect from '~/components/ModeSelect/ModeSelect'
 import SvgIcon from '@mui/material/SvgIcon'
 import { ReactComponent as TrelloLogo } from '~/assets/trello.svg'
 import Typography from '@mui/material/Typography'
@@ -33,13 +33,13 @@ function AppBar() {
       justifyContent: 'space-between',
       gap: 2,
       overflowX: 'auto',
-      bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#343641' : '#49494b')
+      bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#1d2125' : '#49494b')
     }}>
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
         <AppsIcon sx={{ color: 'white' }}/>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
           <SvgIcon component={TrelloLogo} inheritViewBox sx={{ color: 'white' }} />
-          <Typography sx={{ color: 'white', fontSize: '1.3rem', fontWeight: 'bold' }}>Trello</Typography>
+          <Typography variant='caption' sx={{ color: 'white', fontSize: '1.3rem', fontWeight: 'bold' }}>Trello</Typography>
         </Box>
         <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 1 }}>
           <Workspace />

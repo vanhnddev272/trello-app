@@ -13,7 +13,7 @@ import AvatarGroup from '@mui/material/AvatarGroup'
 import TextField from '@mui/material/TextField'
 import { useState } from 'react'
 import { Tooltip } from '@mui/material'
-
+import Input from '@mui/material/Input'
 
 const CHIP_STYLE = {
   color: 'white',
@@ -56,13 +56,13 @@ function BoardBar() {
       px: 2,
       gap: 2,
       overflowX: 'auto',
-      borderTop: '1px solid gray',
+      borderTop: '1px solid #31383d',
       backgroundColor: 'rgba(0, 0, 0, .3)'
     }}>
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
         <Box>
           {isEditing ? (
-            <TextField
+            <Input
               autoFocus
               hiddenLabel
               id="filled-hidden-label-small"
@@ -72,12 +72,29 @@ function BoardBar() {
               variant="filled"
               size="small"
               sx={{
-                '& input': { color: 'white' }
+                width: '100%',
+                height: '100%',
+                color: 'white',
+                fontSize: '18px',
+                fontWeight: 'bold'
               }}
             />
           ) : (
             <Chip
-              sx={CHIP_STYLE}
+              sx={{
+                color: 'white',
+                fontSize: '18px',
+                fontWeight: 'bold',
+                bgcolor: 'transparent',
+                border: 'none',
+                px: '5px',
+                borderRadius: '4px',
+                '& .MuiSvgIcon-root': {
+                  color: 'white'
+                },
+                '&:hover': {
+                  bgcolor: '#A6C5E229'
+                } }}
               icon={<DashboardIcon />}
               label={boardTitle}
               clickable
@@ -151,7 +168,10 @@ function BoardBar() {
               width: 34,
               height: 34,
               fontSize: 16,
-              border: 'none'
+              border: 'none',
+              '&:first-of-type': {
+                bgcolor: '#a4b0be'
+              }
             }
           }}
           total={10} >
