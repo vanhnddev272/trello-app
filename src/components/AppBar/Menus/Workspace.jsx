@@ -27,7 +27,10 @@ function Workspace() {
     <Box>
       <Button
         sx={{
-          color: 'white'
+          color: (theme) => (theme.palette.mode === 'dark' ? '#9fadbc' : 'white'),
+          '&:hover': {
+            bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#a6c5e229' : '')
+          }
         }}
         id="basic-button-workspaces"
         aria-controls={open ? 'basic-menu-workspaces' : undefined}
