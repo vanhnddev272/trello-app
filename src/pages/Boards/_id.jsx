@@ -5,6 +5,7 @@ import BoardBar from './BoardBar/BoardBar'
 import BoardContent from './BoardContent/BoardContent'
 import Box from '@mui/material/Box'
 import bg from '~/assets/bg2.png'
+import { mockData } from '~/apis/mock-data'
 
 function Board() {
   return (
@@ -16,8 +17,8 @@ function Board() {
           backgroundSize: 'cover',
           backgroundPosition: 'center'
         }}>
-        <BoardBar />
-        <BoardContent />
+        <BoardBar board={mockData?.board}/>
+        <BoardContent board={mockData?.board}/>
       </Box>
     </Container>
   )
