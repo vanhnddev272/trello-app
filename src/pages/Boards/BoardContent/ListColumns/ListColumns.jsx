@@ -3,7 +3,7 @@ import Columns from './Columns/Columns'
 import Button from '@mui/material/Button'
 import AddIcon from '@mui/icons-material/Add'
 
-function ListColumns() {
+function ListColumns({ columns }) {
 
   return (
     <Box sx={{
@@ -14,8 +14,8 @@ function ListColumns() {
       overflowY: 'hidden',
       gap: 2
     }}>
-      <Columns />
-      <Columns />
+
+      {columns?.map(column => <Columns key={column._id} column={column} /> )}
 
       <Button
         variant='text'

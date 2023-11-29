@@ -1,4 +1,11 @@
+import { useState } from 'react'
 import Chip from '@mui/material/Chip'
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import Avatar from '@mui/material/Avatar'
+import Input from '@mui/material/Input'
+import Tooltip from '@mui/material/Tooltip'
+import AvatarGroup from '@mui/material/AvatarGroup'
 import DashboardIcon from '@mui/icons-material/Dashboard'
 import StarBorderIcon from '@mui/icons-material/StarBorder'
 import VpnLockIcon from '@mui/icons-material/VpnLock'
@@ -6,14 +13,7 @@ import AddToDriveIcon from '@mui/icons-material/AddToDrive'
 import BoltIcon from '@mui/icons-material/Bolt'
 import FilterListIcon from '@mui/icons-material/FilterList'
 import PersonAddIcon from '@mui/icons-material/PersonAdd'
-import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
-import Avatar from '@mui/material/Avatar'
-import AvatarGroup from '@mui/material/AvatarGroup'
-import TextField from '@mui/material/TextField'
-import { useState } from 'react'
-import { Tooltip } from '@mui/material'
-import Input from '@mui/material/Input'
+import { capitalizeFirstLetter } from '~/utils/formatters'
 
 const CHIP_STYLE = {
   color: 'white',
@@ -29,9 +29,9 @@ const CHIP_STYLE = {
   }
 }
 
-function BoardBar() {
+function BoardBar({ board }) {
   const [isEditing, setIsEditing] = useState(false)
-  const [boardTitle, setBoardTitle] = useState('Vanhnddev Board')
+  const [boardTitle, setBoardTitle] = useState(board?.title)
 
   const handleClick = () => {
     setIsEditing(true)
@@ -66,7 +66,7 @@ function BoardBar() {
               autoFocus
               hiddenLabel
               id="filled-hidden-label-small"
-              value={boardTitle}
+              value={board?.title}
               onBlur={handleBlur}
               onChange={handleChange}
               variant="filled"
@@ -113,7 +113,7 @@ function BoardBar() {
         <Chip
           sx={CHIP_STYLE}
           icon={<VpnLockIcon />}
-          label="Public/Private Workspace"
+          label={capitalizeFirstLetter(board?.type)}
           clickable />
         <Chip
           sx={CHIP_STYLE}

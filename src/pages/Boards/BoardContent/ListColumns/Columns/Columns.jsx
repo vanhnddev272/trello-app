@@ -16,9 +16,12 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
 import AddIcon from '@mui/icons-material/Add'
 import AddCardIcon from '@mui/icons-material/AddCard'
 import ListCards from './ListCards/ListCards'
+import { mapOrder } from '~/utils/sorts'
 
 
-function Columns() {
+function Columns({ column }) {
+  const orderedCards = mapOrder(column?.cards, column?.cardOrderIds, '_id')
+
   const [anchorEl, setAnchorEl] = useState(null)
   const open = Boolean(anchorEl)
   const handleClick = (event) => {
@@ -54,7 +57,7 @@ function Columns() {
             fontSize: '14px',
             fontWeight: 500
           }}>
-          Column Name
+          {column?.title}
         </Typography>
         <IconButton
           sx={{
@@ -120,8 +123,10 @@ function Columns() {
           </MenuItem>
         </Menu>
       </Box>
+
       {/* Board Content */}
-      <ListCards />
+      <ListCards cards={orderedCards} />
+
       {/* Board Footer */}
       <Box sx={{
         height: (theme) => theme.trello.columnFooterHeight,
