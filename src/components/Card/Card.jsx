@@ -6,19 +6,33 @@ import CardContent from '@mui/material/CardContent'
 import CardMedia from '@mui/material/CardMedia'
 import SubjectIcon from '@mui/icons-material/Subject'
 import AttachmentIcon from '@mui/icons-material/Attachment'
+import { useSortable } from '@dnd-kit/sortable'
+import { CSS } from '@dnd-kit/utilities'
 
 
 function Card({ card }) {
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: card._id, data: { ...card } })
+  const dndKitCardStyle = {
+    // touchAction: 'none', //For PointerSensor type
+    transform: CSS.Translate.toString(transform),
+    transition,
+    opacity: isDragging ? 0.5 : undefined
+  }
+
   const isShowCardAction = () => {
     return !!card?.description || !!card?.attachments
   }
 
   return (
-    <MuiCard sx={{
-      borderRadius: '8px',
-      overflow: 'unset',
-      bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#22272B' : 'white')
-    }}>
+    <MuiCard
+      ref={setNodeRef}
+      style={dndKitCardStyle} {...attributes} {...listeners}
+      sx={{
+        borderRadius: '8px',
+        overflow: 'unset',
+        bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#22272B' : 'white'),
+        '&:hover': { outline: '2px solid #388bff' }
+      }}>
       {card?.cover && <CardMedia
         component="img"
         alt="green iguana"
@@ -31,7 +45,7 @@ function Card({ card }) {
             {card?.title}
           </Typography>
         </Box>
-        {isShowCardAction && 
+        {isShowCardAction &&
           <Box sx={{
             display: 'flex',
             gap: 1,
