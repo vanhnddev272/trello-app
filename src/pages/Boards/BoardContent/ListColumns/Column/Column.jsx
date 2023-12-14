@@ -21,7 +21,8 @@ import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import ListCards from './ListCards/ListCards'
 import { mapOrder } from '~/utils/sorts'
-
+import { toast } from 'react-toastify'
+import { Card as MuiCard } from '@mui/material'
 
 function Columns({ column }) {
   const orderedCards = mapOrder(column?.cards, column?.cardOrderIds, '_id')
@@ -43,7 +44,14 @@ function Columns({ column }) {
   const toggleOpenAddNewCard = () => setIsOpenAddNewCard(!isOpenAddNewCard)
 
   const addNewCard = () => {
+    if (!newCardTitle) {
+      toast.warn('🦄 Please provide a new card title!')
+      return
+    }
+    toast.success('Added new card!')
 
+    toggleOpenAddNewCard()
+    setNewCardTitle('')
   }
 
   const handleClick = (event) => {
@@ -160,7 +168,7 @@ function Columns({ column }) {
             data-no-dnd="true"
             sx={{
               height: (theme) => theme.trello.columnFooterHeight,
-              p: '8px 8px 0',
+              p: '0 8px',
               display: 'flex',
               justifyContent: 'space-between',
               alignItems: 'center'
@@ -210,36 +218,40 @@ function Columns({ column }) {
               maxHeight: (theme) => `calc(${theme.trello.boardContentHeight} - ${theme.spacing(4)} )`,
               minWidth: '272px',
               maxWidth: '272px',
-              p: '8px',
+              p: '4px 8px 8px',
               alignItems: 'center',
               borderRadius: '12px'
             }}>
-            <TextField
-              autoFocus
-              hiddenLabel
-              id="outlined-size-small"
-              placeholder='Enter list title ...'
-              value={newCardTitle}
-              size="small"
-              onChange={(e) => setNewCardTitle(e.target.value)}
-              sx={{
-                width: '100%',
-                '& input': {
-                  color: (theme) => (theme.palette.mode === 'dark' ? '#b6c2cf' : ''),
-                  padding: '6px 12px',
-                  fontSize: '14px',
-                  fontWeight: 500,
-                  '&::placeholder': {
-                    color: (theme) => (theme.palette.mode === 'dark' ? '#b6c2cf' : 'black')
+            <MuiCard sx={{
+              borderRadius: '8px',
+              overflow: 'unset',
+              bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#22272B' : 'white')
+            }}>
+              <TextField
+                autoFocus
+                hiddenLabel
+                id="outlined-size-small"
+                placeholder='Enter list title ...'
+                value={newCardTitle}
+                onChange={(e) => setNewCardTitle(e.target.value)}
+                sx={{
+                  width: '100%',
+                  '& input': {
+                    color: (theme) => (theme.palette.mode === 'dark' ? '#b6c2cf' : ''),
+                    padding: '6px 12px',
+                    fontSize: '14px',
+                    '&::placeholder': {
+                      color: (theme) => (theme.palette.mode === 'dark' ? '#b6c2cf' : '')
+                    }
+                  },
+                  '& .MuiOutlinedInput-root': {
+                    '& fieldset': { border: 'none' },
+                    '&:hover fieldset': { borderColor: '#091e4240' },
+                    '&.Mui-focused fieldset': { border: '2px solid #388bff' }
                   }
-                },
-                '& .MuiOutlinedInput-root': {
-                  '& fieldset': { border: 'none' },
-                  '&:hover fieldset': { borderColor: '#091e4240' },
-                  '&.Mui-focused fieldset': { border: '2px solid #388bff' }
-                }
-              }}
-            />
+                }}
+              />
+            </MuiCard>
             <Box sx={{
               display: 'flex',
               marginTop: '8px',

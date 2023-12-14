@@ -30,10 +30,9 @@ const CHIP_STYLE = {
 }
 
 function BoardBar({ board }) {
-  console.log('board?.title: ', board?.title)
+
   const [isEditing, setIsEditing] = useState(false)
   const [boardTitle, setBoardTitle] = useState(board?.title)
-  console.log('boardTitle: ', boardTitle)
 
   const handleClick = () => {
     setIsEditing(true)

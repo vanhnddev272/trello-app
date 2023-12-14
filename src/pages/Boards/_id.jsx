@@ -29,8 +29,8 @@ function Board() {
           backgroundSize: 'cover',
           backgroundPosition: 'center'
         }}>
-        <BoardBar board={mockData.board}/>
-        <BoardContent board={mockData.board}/>
+        <BoardBar board={board}/>
+        <BoardContent board={board}/>
       </Box>
     </Container>
   )
