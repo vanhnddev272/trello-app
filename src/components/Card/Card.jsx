@@ -40,7 +40,7 @@ function Card({ card }) {
         image={card?.cover}
       />}
       <CardContent>
-        <Box sx={{ mb: '4px' }}>
+        <Box sx={{ my: '4px' }}>
           <Typography gutterBottom>
             {card?.title}
           </Typography>

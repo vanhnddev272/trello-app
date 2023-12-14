@@ -6,7 +6,6 @@ import Avatar from '@mui/material/Avatar'
 import Input from '@mui/material/Input'
 import Tooltip from '@mui/material/Tooltip'
 import AvatarGroup from '@mui/material/AvatarGroup'
-import DashboardIcon from '@mui/icons-material/Dashboard'
 import StarBorderIcon from '@mui/icons-material/StarBorder'
 import VpnLockIcon from '@mui/icons-material/VpnLock'
 import AddToDriveIcon from '@mui/icons-material/AddToDrive'
@@ -14,6 +13,7 @@ import BoltIcon from '@mui/icons-material/Bolt'
 import FilterListIcon from '@mui/icons-material/FilterList'
 import PersonAddIcon from '@mui/icons-material/PersonAdd'
 import { capitalizeFirstLetter } from '~/utils/formatters'
+import TextField from '@mui/material/TextField'
 
 const CHIP_STYLE = {
   color: 'white',
@@ -61,24 +61,34 @@ function BoardBar({ board }) {
       borderTop: '1px solid #31383d',
       backgroundColor: 'rgba(0, 0, 0, .3)'
     }}>
-      <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+      <Box sx={{ display: 'flex', alignItems: 'center', marginLeft: 1, gap: 0.5 }}>
         <Box>
           {isEditing ? (
-            <Input
+            <TextField
               autoFocus
-              hiddenLabel
               id="filled-hidden-label-small"
               value={board?.title}
               onBlur={handleBlur}
               onChange={handleChange}
-              variant="filled"
               size="small"
+              variant="outlined"
               sx={{
-                width: '100%',
+                boxSizing: 'border-box',
+                width: 'fit-content',
                 height: '100%',
-                color: 'white',
-                fontSize: '18px',
-                fontWeight: 'bold'
+                '& input': {
+                  textAlign: 'center',
+                  color: 'black',
+                  bgcolor: 'white',
+                  fontSize: '18px',
+                  fontWeight: 'bold',
+                  p: '2px 8px'
+                },
+                '& .MuiOutlinedInput-root': {
+                  '& fieldset': { border: 'none' },
+                  '&:hover fieldset': { borderColor: '#091e4240' },
+                  '&.Mui-focused fieldset': { border: '2px solid #388bff' }
+                }
               }}
             />
           ) : (
@@ -97,8 +107,7 @@ function BoardBar({ board }) {
                 '&:hover': {
                   bgcolor: '#A6C5E229'
                 } }}
-              icon={<DashboardIcon />}
-              label={boardTitle}
+              label={board?.title}
               clickable
               onClick={handleClick}
             />

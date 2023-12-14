@@ -8,6 +8,7 @@ import bg from '~/assets/bg2.png'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { fetchBoardDetailsAPI } from '~/apis'
+import { mockData } from '~/apis/mock-data'
 
 function Board() {
   const [board, setBoard] = useState(null)
@@ -28,8 +29,8 @@ function Board() {
           backgroundSize: 'cover',
           backgroundPosition: 'center'
         }}>
-        <BoardBar board={board}/>
-        <BoardContent board={board}/>
+        <BoardBar board={mockData.board}/>
+        <BoardContent board={mockData.board}/>
       </Box>
     </Container>
   )
