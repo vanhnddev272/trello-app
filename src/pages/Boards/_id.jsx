@@ -8,17 +8,18 @@ import bg from '~/assets/bg2.png'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { fetchBoardDetailsAPI } from '~/apis'
-import { mockData } from '~/apis/mock-data'
+import { useDispatch, useSelector } from 'react-redux'
+import { getBoardDetails, selectBoard } from '~/redux/slices/boardSlice'
 
 function Board() {
-  const [board, setBoard] = useState(null)
+  // const [board, setBoard] = useState(null)
+  const board = useSelector(selectBoard)
+  const dispatch = useDispatch()
   let { id } = useParams()
 
   useEffect(() => {
-    fetchBoardDetailsAPI(id).then(board => {
-      setBoard(board)
-    })
-  }, [id])
+    dispatch(getBoardDetails(id))
+  }, [id, dispatch])
 
   return (
     <Container disableGutters maxWidth={false} sx={{ height: '100vh' }}>
@@ -29,8 +30,8 @@ function Board() {
           backgroundSize: 'cover',
           backgroundPosition: 'center'
         }}>
-        <BoardBar board={mockData.board}/>
-        <BoardContent board={mockData.board}/>
+        <BoardBar board={board}/>
+        <BoardContent board={board}/>
       </Box>
     </Container>
   )
