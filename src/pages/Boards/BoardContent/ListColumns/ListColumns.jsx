@@ -3,32 +3,42 @@ import Columns from './Column/Column'
 import Button from '@mui/material/Button'
 import AddIcon from '@mui/icons-material/Add'
 import { SortableContext, horizontalListSortingStrategy } from '@dnd-kit/sortable'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import TextField from '@mui/material/TextField'
 import IconButton from '@mui/material/IconButton'
 import CloseIcon from '@mui/icons-material/Close'
 import { toast } from 'react-toastify'
+import { postColumn, selectColumn } from '~/redux/slices/columnSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { useParams } from 'react-router-dom'
+import randomstring from 'randomstring'
 
-function ListColumns({ columns }) {
+function ListColumns({ columns, onAddNewColumn }) {
+
   const [isOpenAddNewColumn, setIsOpenAddNewColumn] = useState(false)
   const [newColumnTitle, setNewColumnTitle] = useState('')
+  let { id } = useParams()
+  const column = useSelector(selectColumn)
+  console.log(column)
+  const dispatch = useDispatch()
 
   const toggleOpenAddNewColumn = () => setIsOpenAddNewColumn(!isOpenAddNewColumn)
 
   const addNewColumn = () => {
     if (!newColumnTitle) {
-      toast.warn('🦄 Please provide a new column title!', {
-        position: 'bottom-right',
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: 'colored'
-      })
+      toast.warn('🦄 Please provide a new column title!')
       return
     }
+
+    const newColumnData = {
+      boardId: id,
+      title: newColumnTitle
+    }
+
+    dispatch(postColumn(newColumnData))
+
+    onAddNewColumn(newColumnData)
+
     toast.success('Added new column!')
 
     toggleOpenAddNewColumn()
@@ -36,17 +46,18 @@ function ListColumns({ columns }) {
   }
 
   return (
-    <SortableContext items={columns?.map(column => column._id)} strategy={horizontalListSortingStrategy}>
+    <SortableContext items={columns?.map(column => ({ id: column._id }))} strategy={horizontalListSortingStrategy}>
       <Box sx={{
         width: '100%',
         height: '100%',
+        pl: '12px',
         display: 'flex',
         overflowX: 'auto',
         overflowY: 'hidden',
         gap: 2
       }}>
 
-        {columns?.map(column => <Columns key={column._id} column={column} /> )}
+        {columns?.map((column, index) => <Columns key={index} column={column} /> )}
 
         {!isOpenAddNewColumn
           ? <Box>

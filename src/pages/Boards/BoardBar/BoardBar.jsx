@@ -30,10 +30,8 @@ const CHIP_STYLE = {
 }
 
 function BoardBar({ board }) {
-  console.log('board?.title: ', board?.title)
   const [isEditing, setIsEditing] = useState(false)
   const [boardTitle, setBoardTitle] = useState(board?.title)
-  console.log('boardTitle: ', boardTitle)
 
   const handleClick = () => {
     setIsEditing(true)
@@ -57,7 +55,7 @@ function BoardBar({ board }) {
       justifyContent: 'space-between',
       px: 2,
       gap: 2,
-      overflowX: 'auto',
+      overflowX: 'hidden',
       borderTop: '1px solid #31383d',
       backgroundColor: 'rgba(0, 0, 0, .3)'
     }}>
