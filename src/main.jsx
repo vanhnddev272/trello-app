@@ -15,7 +15,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     {/* <React.StrictMode> */}
     <CssVarsProvider theme={theme} >
       <CssBaseline />
-      <App/>
+      <App />
       <ToastContainer
         autoClose={3000}
         position='bottom-right'
@@ -23,5 +23,6 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       />
     </CssVarsProvider>
     {/* </React.StrictMode> */}
+
   </Provider>
 )
