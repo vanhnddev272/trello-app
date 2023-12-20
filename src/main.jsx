@@ -11,17 +11,15 @@ import { store } from './redux/store'
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <Provider store={store}>
-    {/* <React.StrictMode> */}
-    <CssVarsProvider theme={theme} >
-      <CssBaseline />
-      <App/>
-      <ToastContainer
-        autoClose={3000}
-        position='bottom-right'
-        theme='colored'
-      />
-    </CssVarsProvider>
-    {/* </React.StrictMode> */}
-  </Provider>
+  // <React.StrictMode>
+  <CssVarsProvider theme={theme} >
+    <CssBaseline />
+    <App />
+    <ToastContainer
+      autoClose={3000}
+      position='bottom-right'
+      theme='colored'
+    />
+  </CssVarsProvider>
+  // </React.StrictMode>
 )

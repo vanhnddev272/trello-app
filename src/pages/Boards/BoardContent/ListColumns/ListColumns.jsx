@@ -7,11 +7,8 @@ import { useEffect, useState } from 'react'
 import TextField from '@mui/material/TextField'
 import IconButton from '@mui/material/IconButton'
 import CloseIcon from '@mui/icons-material/Close'
-import { toast } from 'react-toastify'
-import { postColumn, selectColumn } from '~/redux/slices/columnSlice'
-import { useDispatch, useSelector } from 'react-redux'
+import { toast } from 'react-toastify
 import { useParams } from 'react-router-dom'
-import randomstring from 'randomstring'
 
 function ListColumns({ columns, onAddNewColumn }) {
 
@@ -26,6 +23,18 @@ function ListColumns({ columns, onAddNewColumn }) {
 
   const addNewColumn = () => {
     if (!newColumnTitle) {
+      toast.warn('🦄 Please provide a new column title!', {
+        position: 'bottom-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'colored'
+      })
+      return
+    }
       toast.warn('🦄 Please provide a new column title!')
       return
     }
@@ -38,7 +47,6 @@ function ListColumns({ columns, onAddNewColumn }) {
     dispatch(postColumn(newColumnData))
 
     onAddNewColumn(newColumnData)
-
     toast.success('Added new column!')
 
     toggleOpenAddNewColumn()
