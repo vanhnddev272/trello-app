@@ -30,7 +30,6 @@ const CHIP_STYLE = {
 }
 
 function BoardBar({ board }) {
-
   const [isEditing, setIsEditing] = useState(false)
   const [boardTitle, setBoardTitle] = useState(board?.title)
 
@@ -56,7 +55,7 @@ function BoardBar({ board }) {
       justifyContent: 'space-between',
       px: 2,
       gap: 2,
-      overflowX: 'auto',
+      overflowX: 'hidden',
       borderTop: '1px solid #31383d',
       backgroundColor: 'rgba(0, 0, 0, .3)'
     }}>
