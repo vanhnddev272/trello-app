@@ -31,7 +31,8 @@ function Card({ card }) {
         borderRadius: '8px',
         overflow: 'unset',
         bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#22272B' : 'white'),
-        '&:hover': { outline: '2px solid #388bff' }
+        '&:hover': { outline: '2px solid #388bff' },
+        display: card.FE_PlaceholderCard ? 'none' : 'block'
       }}>
       {card?.cover && <CardMedia
         component="img"
