@@ -16,7 +16,6 @@ function ListColumns({ columns, onAddNewColumn }) {
   const [newColumnTitle, setNewColumnTitle] = useState('')
   let { id } = useParams()
   const column = useSelector(selectColumn)
-  console.log(column)
   const dispatch = useDispatch()
 
   const toggleOpenAddNewColumn = () => setIsOpenAddNewColumn(!isOpenAddNewColumn)

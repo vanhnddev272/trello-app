@@ -10,6 +10,7 @@ import { useParams } from 'react-router-dom'
 import { fetchBoardDetailsAPI } from '~/apis'
 import { useDispatch, useSelector } from 'react-redux'
 import { getBoardDetails, selectBoard } from '~/redux/slices/boardSlice'
+import { mockData } from '~/apis/mock-data'
 
 function Board() {
   // const [board, setBoard] = useState(null)
@@ -30,8 +31,8 @@ function Board() {
           backgroundSize: 'cover',
           backgroundPosition: 'center'
         }}>
-        <BoardBar board={board}/>
-        <BoardContent board={board}/>
+        <BoardBar board={mockData.board}/>
+        <BoardContent board={mockData.board}/>
       </Box>
     </Container>
   )
