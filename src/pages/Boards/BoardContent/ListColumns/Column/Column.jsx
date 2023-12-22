@@ -23,7 +23,6 @@ import ListCards from './ListCards/ListCards'
 import { mapOrder } from '~/utils/sorts'
 import { toast } from 'react-toastify'
 import { Card as MuiCard } from '@mui/material'
-import { createNewCardAPI } from '~/apis'
 
 function Columns({ column }) {
   const orderedCards = mapOrder(column?.cards, column?.cardOrderIds, '_id')
@@ -49,19 +48,7 @@ function Columns({ column }) {
       toast.warn('🦄 Please provide a new card title!')
       return
     }
-
-    const newCardData = {
-      title: newCardTitle,
-      boardId: column.boardId,
-      columnId: column._id
-    }
-
-    createNewCardAPI(newCardData)
-
     toast.success('Added new card!')
-
-    toggleOpenAddNewCard()
-    setNewCardTitle('')
   }
 
   const handleClick = (event) => {

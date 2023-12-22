@@ -90,11 +90,8 @@ function BoardContent({ board }) {
       if (nextActiveColumn) {
         nextActiveColumn.cards = nextActiveColumn.cards.filter(card => card._id !== activeDraggingCardId)
         if (isEmpty(nextActiveColumn.cards)) {
-          console.log('card cuoi cung bi keo di')
           nextActiveColumn.cards = [generatePlaceholderCard(nextActiveColumn)]
-          console.log(nextActiveColumn.cards)
         }
-
         nextActiveColumn.cardOrderIds = nextActiveColumn.cards.map(card => card._id)
       }
 
@@ -107,6 +104,8 @@ function BoardContent({ board }) {
             ...activeDraggingCardData,
             columnId: nextOverColumn._id
           })
+
+        nextOverColumn.cards = nextOverColumn.cards.filter(card => !card.FE_PlaceholderCard)
         nextOverColumn.cardOrderIds = nextOverColumn.cards.map(card => card._id)
       }
 
