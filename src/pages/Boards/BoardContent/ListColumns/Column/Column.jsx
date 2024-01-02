@@ -24,9 +24,8 @@ import { mapOrder } from '~/utils/sorts'
 import { toast } from 'react-toastify'
 import { Card as MuiCard } from '@mui/material'
 
-function Columns({ column }) {
-  const orderedCards = mapOrder(column?.cards, column?.cardOrderIds, '_id')
-
+function Columns({ column, createNewCard }) {
+  const orderedCards = column.cards
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: column._id, data: { ...column } })
   const dndKitColumnsStyle = {
     // touchAction: 'none', //For PointerSensor type
@@ -48,6 +47,13 @@ function Columns({ column }) {
       toast.warn('🦄 Please provide a new card title!')
       return
     }
+
+    const newCardData = {
+      title: newCardTitle,
+      columnId: column._id
+    }
+
+    createNewCard(newCardData)
     toast.success('Added new card!')
 
     toggleOpenAddNewCard()

@@ -9,7 +9,7 @@ import IconButton from '@mui/material/IconButton'
 import CloseIcon from '@mui/icons-material/Close'
 import { toast } from 'react-toastify'
 
-function ListColumns({ columns }) {
+function ListColumns({ columns, createNewColumn, createNewCard }) {
   const [isOpenAddNewColumn, setIsOpenAddNewColumn] = useState(false)
   const [newColumnTitle, setNewColumnTitle] = useState('')
 
@@ -17,19 +17,16 @@ function ListColumns({ columns }) {
 
   const addNewColumn = () => {
     if (!newColumnTitle) {
-      toast.warn('🦄 Please provide a new column title!', {
-        position: 'bottom-right',
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: 'colored'
-      })
+      toast.warn('🦄 Please provide a new column title!')
       return
     }
+
+    const newColumnData = {
+      title: newColumnTitle
+    }
     toast.success('Added new column!')
+
+    createNewColumn(newColumnData)
 
     toggleOpenAddNewColumn()
     setNewColumnTitle('')
@@ -46,7 +43,7 @@ function ListColumns({ columns }) {
         gap: 2
       }}>
 
-        {columns?.map(column => <Columns key={column._id} column={column} /> )}
+        {columns?.map(column => <Columns key={column._id} column={column} createNewCard={createNewCard} /> )}
 
         {!isOpenAddNewColumn
           ? <Box>
