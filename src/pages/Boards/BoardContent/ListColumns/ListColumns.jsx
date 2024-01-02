@@ -3,7 +3,7 @@ import Columns from './Column/Column'
 import Button from '@mui/material/Button'
 import AddIcon from '@mui/icons-material/Add'
 import { SortableContext, horizontalListSortingStrategy } from '@dnd-kit/sortable'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import TextField from '@mui/material/TextField'
 import IconButton from '@mui/material/IconButton'
 import CloseIcon from '@mui/icons-material/Close'
@@ -33,16 +33,16 @@ function ListColumns({ columns, createNewColumn, createNewCard }) {
   }
 
   return (
-    <SortableContext items={columns?.map(column => column._id)} strategy={horizontalListSortingStrategy}>
+    <SortableContext items={columns?.map(column => ({ id: column._id }))} strategy={horizontalListSortingStrategy}>
       <Box sx={{
         width: '100%',
         height: '100%',
+        pl: '12px',
         display: 'flex',
         overflowX: 'auto',
         overflowY: 'hidden',
         gap: 2
       }}>
-
         {columns?.map(column => <Columns key={column._id} column={column} createNewCard={createNewCard} /> )}
 
         {!isOpenAddNewColumn
