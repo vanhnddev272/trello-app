@@ -232,6 +232,10 @@ function BoardContent({
     })
   }
 
+  const onAddNewColumn = (newColumnData) => {
+    setOrderedColumns([...orderedColumns, newColumnData])
+  }
+
   const collisionDetectionStrategy = useCallback((args) => {
     if (activeDragItemType === ACTIVE_DRAG_ITEM_TYPE.COLUMN) {
       return closestCorners({ ...args })
@@ -265,12 +269,13 @@ function BoardContent({
       collisionDetection={collisionDetectionStrategy}
       onDragStart={handleDragStart}
       onDragOver={handleDragOver}
-      onDragEnd={handleDragEnd} >
+      onDragEnd={handleDragEnd}
+    >
       <Box sx={{
         width: '100%',
         height: (theme) => theme.trello.boardContentHeight,
         mt: '12px',
-        p: '0 16px 12px'
+        p: '0 0 12px'
       }}>
         {/* Column */}
         <ListColumns

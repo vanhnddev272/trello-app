@@ -52,9 +52,6 @@ function Columns({ column, createNewCard, deleteColumn }) {
 
     createNewCard(newCardData)
     toast.success('Added new card!')
-
-    toggleOpenAddNewCard()
-    setNewCardTitle('')
   }
 
   const handleClick = (event) => {
