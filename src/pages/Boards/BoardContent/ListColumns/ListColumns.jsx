@@ -9,7 +9,7 @@ import IconButton from '@mui/material/IconButton'
 import CloseIcon from '@mui/icons-material/Close'
 import { toast } from 'react-toastify'
 
-function ListColumns({ columns, createNewColumn, createNewCard }) {
+function ListColumns({ columns, createNewColumn, createNewCard, deleteColumn }) {
   const [isOpenAddNewColumn, setIsOpenAddNewColumn] = useState(false)
   const [newColumnTitle, setNewColumnTitle] = useState('')
 
@@ -43,7 +43,7 @@ function ListColumns({ columns, createNewColumn, createNewCard }) {
         gap: 2
       }}>
 
-        {columns?.map(column => <Columns key={column._id} column={column} createNewCard={createNewCard} /> )}
+        {columns?.map(column => <Columns key={column._id} column={column} createNewCard={createNewCard} deleteColumn={deleteColumn} /> )}
 
         {!isOpenAddNewColumn
           ? <Box>
@@ -89,6 +89,9 @@ function ListColumns({ columns, createNewColumn, createNewCard }) {
               value={newColumnTitle}
               size="small"
               onChange={(e) => setNewColumnTitle(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') addNewColumn()
+              }}
               sx={{
                 width: '100%',
                 '& input': {

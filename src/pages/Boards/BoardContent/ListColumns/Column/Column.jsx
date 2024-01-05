@@ -5,14 +5,11 @@ import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import Divider from '@mui/material/Divider'
 import ListItemText from '@mui/material/ListItemText'
-import ListItemIcon from '@mui/material/ListItemIcon'
 import Typography from '@mui/material/Typography'
 import IconButton from '@mui/material/IconButton'
 import TextField from '@mui/material/TextField'
-import ContentCut from '@mui/icons-material/ContentCut'
-import ContentCopy from '@mui/icons-material/ContentCopy'
-import ContentPaste from '@mui/icons-material/ContentPaste'
-import Cloud from '@mui/icons-material/Cloud'
+import MenuList from '@mui/material/MenuList'
+import Paper from '@mui/material/Paper'
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
 import AddIcon from '@mui/icons-material/Add'
 import AddCardIcon from '@mui/icons-material/AddCard'
@@ -20,11 +17,11 @@ import CloseIcon from '@mui/icons-material/Close'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import ListCards from './ListCards/ListCards'
-import { mapOrder } from '~/utils/sorts'
 import { toast } from 'react-toastify'
 import { Card as MuiCard } from '@mui/material'
+import { useConfirm } from 'material-ui-confirm'
 
-function Columns({ column, createNewCard }) {
+function Columns({ column, createNewCard, deleteColumn }) {
   const orderedCards = column.cards
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: column._id, data: { ...column } })
   const dndKitColumnsStyle = {
@@ -66,6 +63,23 @@ function Columns({ column, createNewCard }) {
 
   const handleClose = () => {
     setAnchorEl(null)
+  }
+
+  const confirmDeleteColumn = useConfirm()
+  const deleteThisColumn = () => {
+    confirmDeleteColumn({
+      title: 'Delete Column?',
+      description: 'This action will permanently delete your column and its cards! Are you sure?'
+      // dialogProps: { maxWidth: 'xs' },
+      // buttonOrder: ['confirm', 'cancel']
+      // confirmationKeyword: `${column.title}`
+    })
+      .then(() => {
+        deleteColumn(column._id)
+
+        toast.success('Column deleted successfully!')
+      })
+      .catch(() => {})
   }
 
   return (
@@ -123,45 +137,109 @@ function Columns({ column, createNewCard }) {
             id="basic-menu-dropdown"
             anchorEl={anchorEl}
             open={open}
+            onClick={handleClose}
             onClose={handleClose}
             MenuListProps={{
               'aria-labelledby': 'basic-column-dropdown'
             }}
           >
-            <MenuItem>
-              <ListItemIcon>
-                <ContentCut fontSize="small" />
-              </ListItemIcon>
-              <ListItemText>Cut</ListItemText>
-              <Typography variant="body2" color="text.secondary">
-                ⌘X
-              </Typography>
-            </MenuItem>
-            <MenuItem>
-              <ListItemIcon>
-                <ContentCopy fontSize="small" />
-              </ListItemIcon>
-              <ListItemText>Copy</ListItemText>
-              <Typography variant="body2" color="text.secondary">
-                ⌘C
-              </Typography>
-            </MenuItem>
-            <MenuItem>
-              <ListItemIcon>
-                <ContentPaste fontSize="small" />
-              </ListItemIcon>
-              <ListItemText>Paste</ListItemText>
-              <Typography variant="body2" color="text.secondary">
-                ⌘V
-              </Typography>
-            </MenuItem>
-            <Divider />
-            <MenuItem>
-              <ListItemIcon>
-                <Cloud fontSize="small" />
-              </ListItemIcon>
-              <ListItemText>Web Clipboard</ListItemText>
-            </MenuItem>
+            <Paper sx={{
+              bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#282e33' : 'white'),
+              width: 300
+            }}>
+              <Box
+                data-no-dnd="true"
+                sx={{
+                  height: (theme) => theme.trello.columnFooterHeight,
+                  p: '0 8px',
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center'
+                }}
+              >
+                <Typography
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    fontWeight: 500,
+                    flexGrow: '1'
+                  }}>List actions
+                </Typography>
+                <IconButton
+                  sx={{
+                    color: (theme) => (theme.palette.mode === 'dark' ? '#9fadbc' : '#44546f'),
+                    width: '34px',
+                    height: '34px',
+                    p: '6px',
+                    justifySelf: 'flex-end',
+                    borderRadius: '8px',
+                    position: 'absolute',
+                    right: '8px',
+                    '&:hover ': {
+                      bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#A6C5E229' : '#091E4224'),
+                      color: (theme) => (theme.palette.mode === 'dark' ? '#B6C2CF' : '#172b4d')
+                    }
+                  }}
+                >
+                  <CloseIcon sx={{ fontSize: '20px' }} />
+                </IconButton>
+              </Box>
+              <MenuList dense>
+                <MenuItem>
+                  <ListItemText onClick={toggleOpenAddNewCard}>Add card</ListItemText>
+                </MenuItem>
+                <MenuItem>
+                  <ListItemText >Copy list</ListItemText>
+                </MenuItem>
+                <MenuItem>
+                  <ListItemText >Move list</ListItemText>
+                </MenuItem>
+                <MenuItem>
+                  <ListItemText >Watch</ListItemText>
+                </MenuItem>
+                <Divider />
+                <MenuItem>
+                  <ListItemText>Sort by...</ListItemText>
+                </MenuItem>
+                <Divider />
+                <MenuItem>
+                  <ListItemText sx={{
+                    '& .MuiTypography-root': {
+                      fontSize: '12px',
+                      fontWeight: 500,
+                      padding: '8px 0 0',
+                      margin: '0 0 8px'
+                    }
+                  }}>
+                    Automation
+                  </ListItemText>
+                </MenuItem>
+                <MenuItem>
+                  <ListItemText >When a card is added to the list…</ListItemText>
+                </MenuItem>
+                <MenuItem>
+                  <ListItemText >Every day, sort list by...</ListItemText>
+                </MenuItem>
+                <MenuItem>
+                  <ListItemText >Every Monday, sort list by...</ListItemText>
+                </MenuItem>
+                <MenuItem>
+                  <ListItemText >Create a rule</ListItemText>
+                </MenuItem>
+                <Divider />
+                <MenuItem>
+                  <ListItemText>Move all card in this list</ListItemText>
+                </MenuItem>
+                <MenuItem>
+                  <ListItemText>Archive all card in this list</ListItemText>
+                </MenuItem>
+                <Divider />
+                <MenuItem onClick={deleteThisColumn}>
+                  <ListItemText>Delete this list</ListItemText>
+                </MenuItem>
+              </MenuList>
+            </Paper>
           </Menu>
         </Box>
 
@@ -237,9 +315,12 @@ function Columns({ column, createNewCard }) {
                 autoFocus
                 hiddenLabel
                 id="outlined-size-small"
-                placeholder='Enter list title ...'
+                placeholder='Enter title for this card'
                 value={newCardTitle}
                 onChange={(e) => setNewCardTitle(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') addNewCard()
+                }}
                 sx={{
                   width: '100%',
                   '& input': {

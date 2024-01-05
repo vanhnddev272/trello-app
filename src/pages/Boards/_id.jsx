@@ -7,7 +7,7 @@ import Box from '@mui/material/Box'
 import bg from '~/assets/bg2.png'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { createNewCardAPI, createNewColumnAPI, fetchBoardDetailsAPI, moveCardToDifferentColumnAPI, updateBoardAPI, updateColumnAPI } from '~/apis'
+import { createNewCardAPI, createNewColumnAPI, deleteColumnAPI, fetchBoardDetailsAPI, moveCardToDifferentColumnAPI, updateBoardAPI, updateColumnAPI } from '~/apis'
 import { isEmpty } from 'lodash'
 import { generatePlaceholderCard } from '~/utils/formatters'
 import { mapOrder } from '~/utils/sorts'
@@ -112,6 +112,15 @@ function Board() {
     })
   }
 
+  const deleteColumn = (columnId) => {
+    const newBoard = { ...board }
+    newBoard.columns = newBoard.columns.filter(column => column._id !== columnId)
+    newBoard.columnOrderIds = newBoard.columnOrderIds.filter(_id => _id !== columnId)
+    setBoard(newBoard)
+
+    deleteColumnAPI(columnId)
+  }
+
   if (!board) {
     return (
       <>
@@ -154,6 +163,7 @@ function Board() {
           moveColumn={moveColumn}
           moveCardInTheSameColumn={moveCardInTheSameColumn}
           moveCardToDifferentColumn={moveCardToDifferentColumn}
+          deleteColumn={deleteColumn}
         />
       </Box>
     </Container>
