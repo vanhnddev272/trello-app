@@ -1,7 +1,16 @@
+import { Box } from '@mui/material'
+import { Link } from 'react-router-dom'
 
 function HomePage() {
+  const boardId = '657ca1fb3346ae48f9e0bd8c'
   return (
-    <div>Please add this id to url: 657ca1fb3346ae48f9e0bd8c</div>
+    <Box sx={{
+      display: 'flex',
+      justifyContent: 'center',
+      paddingTop: '16px'
+    }}>
+      <Link to={`/${boardId}`}>Go to board</Link>
+    </Box>
   )
 }
 
