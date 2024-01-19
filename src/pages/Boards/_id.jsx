@@ -6,19 +6,27 @@ import BoardContent from './BoardContent/BoardContent'
 import Box from '@mui/material/Box'
 import bg from '~/assets/bg2.png'
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { createNewCardAPI, createNewColumnAPI, deleteColumnAPI, fetchBoardDetailsAPI, moveCardToDifferentColumnAPI, updateBoardAPI, updateColumnAPI } from '~/apis'
 import { isEmpty } from 'lodash'
 import { generatePlaceholderCard } from '~/utils/formatters'
 import { mapOrder } from '~/utils/sorts'
 import { CircularProgress } from '@mui/material'
+import { useSelector } from 'react-redux'
 
 function Board() {
   const [board, setBoard] = useState(null)
+  // const user = useSelector((state) => state.user.login)
+  const accessToken = localStorage.getItem('access_token')
   let { id } = useParams()
 
+  const navigate = useNavigate()
+
   useEffect(() => {
-    fetchBoardDetailsAPI(id).then(board => {
+    if (!accessToken) {
+      navigate('/login')
+    }
+    fetchBoardDetailsAPI(id, accessToken).then(board => {
       board.columns = mapOrder(board.columns, board.columnOrderIds, '_id')
 
       board.columns.forEach(column => {
@@ -31,7 +39,7 @@ function Board() {
       })
       setBoard(board)
     })
-  }, [id])
+  }, [id, accessToken])
 
   const createNewColumn = async (newColumnData) => {
     const createdColumn = await createNewColumnAPI({

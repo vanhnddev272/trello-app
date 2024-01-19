@@ -1,8 +1,16 @@
 import axios from 'axios'
 import { API_ROOT } from '~/utils/constants'
 
-export const fetchBoardDetailsAPI = async (boardId) => {
-  return (await axios.get(`${API_ROOT}/v1/boards/${boardId}`)).data
+export const loginAPI = async (userData) => {
+  return (await axios.post(`${API_ROOT}/v1/login`, userData)).data
+}
+
+export const registerAPI = async (userData) => {
+  return (await axios.post(`${API_ROOT}/v1/register`, userData)).data
+}
+
+export const fetchBoardDetailsAPI = async (boardId, accessToken) => {
+  return (await axios.get(`${API_ROOT}/v1/boards/${boardId}`, { headers: { token: `Bearer ${accessToken}` } })).data
 }
 
 export const updateBoardAPI = async (boardId, updateData) => {
