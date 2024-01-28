@@ -7,26 +7,47 @@ import Box from '@mui/material/Box'
 import bg from '~/assets/bg2.png'
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { createNewCardAPI, createNewColumnAPI, deleteColumnAPI, fetchBoardDetailsAPI, moveCardToDifferentColumnAPI, updateBoardAPI, updateColumnAPI } from '~/apis'
+import { createNewCardAPI, createNewColumnAPI, deleteColumnAPI, fetchBoardDetailsAPI, moveCardToDifferentColumnAPI, requestRefreshTokenAPI, updateBoardAPI, updateColumnAPI } from '~/apis'
 import { isEmpty } from 'lodash'
 import { generatePlaceholderCard } from '~/utils/formatters'
 import { mapOrder } from '~/utils/sorts'
 import { CircularProgress } from '@mui/material'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import axios from 'axios'
+import { jwtDecode } from 'jwt-decode'
+import { refreshToken } from '~/redux/slices/userSlice'
 
 function Board() {
   const [board, setBoard] = useState(null)
-  // const user = useSelector((state) => state.user.login)
-  const accessToken = localStorage.getItem('access_token')
+  const user = useSelector((state) => state.user.login)
+  const dispatch = useDispatch()
   let { id } = useParams()
-
   const navigate = useNavigate()
+  const accessToken = user.accessToken
+
+  const verifyJwtTokenAxios = axios.create()
+  verifyJwtTokenAxios.interceptors.request.use(
+    async (config) => {
+      const decodedToken = jwtDecode(accessToken)
+      if (decodedToken.exp * 1000 < new Date().getTime()) {
+        const data = await requestRefreshTokenAPI(user)
+        const refreshedUser = {
+          ...user,
+          accessToken: data.accessToken
+        }
+        dispatch(refreshToken(refreshedUser))
+        config.headers['token'] = 'Bearer ' + data.accessToken
+      }
+      return config
+    }
+  )
 
   useEffect(() => {
     if (!accessToken) {
       navigate('/login')
     }
-    fetchBoardDetailsAPI(id, accessToken).then(board => {
+
+    fetchBoardDetailsAPI(id, accessToken, verifyJwtTokenAxios).then(board => {
       board.columns = mapOrder(board.columns, board.columnOrderIds, '_id')
 
       board.columns.forEach(column => {
@@ -39,7 +60,7 @@ function Board() {
       })
       setBoard(board)
     })
-  }, [id, accessToken])
+  }, [accessToken])
 
   const createNewColumn = async (newColumnData) => {
     const createdColumn = await createNewColumnAPI({

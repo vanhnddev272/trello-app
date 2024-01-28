@@ -20,9 +20,11 @@ import Recent from './Menus/Recent'
 import Starred from './Menus/Starred'
 import Templates from './Menus/Templates'
 import Profiles from './Menus/Profiles'
+import { useNavigate } from 'react-router-dom'
 
 function AppBar() {
   const [searchText, setSearchText] = useState('')
+  const navigate = useNavigate()
 
   return (
     <Box px={2} sx={{
@@ -37,7 +39,7 @@ function AppBar() {
     }}>
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
         <AppsIcon sx={{ color: 'white' }}/>
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+        <Box onClick={() => navigate('/')} sx={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 0.5 }}>
           <SvgIcon component={TrelloLogo} inheritViewBox sx={{ color: 'white' }} />
           <Typography variant='caption' sx={{ color: 'white', fontSize: '1.3rem', fontWeight: 'bold' }}>Trello</Typography>
         </Box>

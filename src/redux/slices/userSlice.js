@@ -17,13 +17,22 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     loginUser: (state, action) => {
-      state.login.username = action.payload.user.loginUser.username
-      state.login.email = action.payload.user.loginUser.email
-      state.login.accessToken = action.payload.user.accessToken
+      state.login.username = action.payload.loginUser.username
+      state.login.email = action.payload.loginUser.email
+      state.login.accessToken = action.payload.accessToken
       state.login.success = true
+    },
+    refreshToken: (state, action) => {
+      state.login.accessToken = action.payload.accessToken
+    },
+    logout: (state, action) => {
+      state.login.username = ''
+      state.login.email = ''
+      state.login.accessToken = ''
+      state.login.success = false
     }
   }
 })
 
-export const { loginUser } = userSlice.actions
+export const { loginUser, refreshToken, logout } = userSlice.actions
 export default userSlice.reducer

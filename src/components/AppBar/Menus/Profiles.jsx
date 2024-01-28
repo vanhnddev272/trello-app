@@ -1,24 +1,35 @@
-import * as React from 'react'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import Divider from '@mui/material/Divider'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import Box from '@mui/material/Box'
-import Avatar from '@mui/material/Avatar';
-import IconButton from '@mui/material/IconButton';
-import Tooltip from '@mui/material/Tooltip';
-import PersonAdd from '@mui/icons-material/PersonAdd';
-import Settings from '@mui/icons-material/Settings';
-import Logout from '@mui/icons-material/Logout';
+import Avatar from '@mui/material/Avatar'
+import IconButton from '@mui/material/IconButton'
+import Tooltip from '@mui/material/Tooltip'
+import PersonAdd from '@mui/icons-material/PersonAdd'
+import Settings from '@mui/icons-material/Settings'
+import Logout from '@mui/icons-material/Logout'
+import { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { logoutAPI } from '~/apis'
+import { logout } from '~/redux/slices/userSlice'
 
 function Profiles() {
-  const [anchorEl, setAnchorEl] = React.useState(null)
+  const loggedUser = useSelector((state) => state.user.login)
+  const dispatch = useDispatch()
+  const [anchorEl, setAnchorEl] = useState(null)
   const open = Boolean(anchorEl)
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget)
   }
   const handleClose = () => {
     setAnchorEl(null)
+  }
+
+  const handleLogout = async () => {
+    console.log(loggedUser)
+    await logoutAPI(loggedUser)
+    dispatch(logout())
   }
 
   return (
@@ -88,7 +99,7 @@ function Profiles() {
           </ListItemIcon>
           Settings
         </MenuItem>
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={handleLogout}>
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>

@@ -18,14 +18,14 @@ const Login = () => {
   const onSubmit = async (data) => {
     const userLogin = await loginAPI(data)
     if (userLogin) {
-      dispatch(loginUser(userLogin))
+      dispatch(loginUser(userLogin.user))
       localStorage.setItem('access_token', userLogin.user.accessToken)
       navigate('/')
     }
   }
   return (
     <Container maxWidth="xs">
-      <Typography variant="h4" align="center" marginY={2}>Login Form</Typography>
+      <Typography variant="h4" align="center" marginY={2}>Sign in</Typography>
       <form id='login' onSubmit={handleSubmit(onSubmit)}>
         <Controller
           name="username"
@@ -77,7 +77,7 @@ const Login = () => {
           )}
         />
         <Button type="submit" variant="contained" color="primary" fullWidth>
-          Login
+          Sign in
         </Button>
       </form>
       <Grid sx={{ marginTop: '8px' }} container justifyContent="flex-end">
