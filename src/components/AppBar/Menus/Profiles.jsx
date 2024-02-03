@@ -27,7 +27,6 @@ function Profiles() {
   }
 
   const handleLogout = async () => {
-    console.log(loggedUser)
     await logoutAPI(loggedUser)
     dispatch(logout())
   }

@@ -175,6 +175,18 @@ function Board() {
     )
   }
 
+  // if (!board) {
+  //   return (
+  //     <Container disableGutters maxWidth={false} sx={{ height: '100vh' }}>
+  //       <AppBar />
+  //       <Box>
+  //         <BoardBar loading/>
+  //         {/* <BoardContent loading/> */}
+  //       </Box>
+  //     </Container>
+  //   )
+  // }
+
   return (
     <Container disableGutters maxWidth={false} sx={{ height: '100vh' }}>
       <AppBar />

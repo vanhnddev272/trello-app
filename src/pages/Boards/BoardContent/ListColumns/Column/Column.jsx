@@ -2,13 +2,13 @@ import { useState } from 'react'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Menu from '@mui/material/Menu'
-import MenuItem from '@mui/material/MenuItem'
 import Divider from '@mui/material/Divider'
+import MenuList from '@mui/material/MenuList'
+import MenuItem from '@mui/material/MenuItem'
 import ListItemText from '@mui/material/ListItemText'
 import Typography from '@mui/material/Typography'
 import IconButton from '@mui/material/IconButton'
 import TextField from '@mui/material/TextField'
-import MenuList from '@mui/material/MenuList'
 import Paper from '@mui/material/Paper'
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
 import AddIcon from '@mui/icons-material/Add'
@@ -96,7 +96,6 @@ function Columns({ column, createNewCard, deleteColumn }) {
           p: '0 0 8px',
           borderRadius: '12px'
         }}>
-        {/* Board Header */}
         <Box sx={{
           height: (theme) => theme.trello.columnHeaderHeight,
           p: '8px 8px 0',
@@ -145,7 +144,9 @@ function Columns({ column, createNewCard, deleteColumn }) {
           >
             <Paper sx={{
               bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#282e33' : 'white'),
-              width: 300
+              width: 300,
+              padding: '4px 0 12px',
+              borderRadius: '8px'
             }}>
               <Box
                 data-no-dnd="true"
@@ -236,17 +237,15 @@ function Columns({ column, createNewCard, deleteColumn }) {
                 </MenuItem>
                 <Divider />
                 <MenuItem onClick={deleteThisColumn}>
-                  <ListItemText>Delete this list</ListItemText>
+                  <ListItemText>Delete this column</ListItemText>
                 </MenuItem>
               </MenuList>
             </Paper>
           </Menu>
         </Box>
 
-        {/* Board Content */}
         <ListCards cards={orderedCards} />
 
-        {/* Board Footer */}
         {!isOpenAddNewCard
           ? <Box
             data-no-dnd="true"

@@ -2,10 +2,12 @@
 import { experimental_extendTheme as extendTheme } from '@mui/material/styles'
 
 const APP_BAR_HEIGHT = '54px'
-const BOARD_BAR_HEIGHT = '62px'
+const BOARD_BAR_HEIGHT = '58px'
 const BOARD_CONTENT_HEIGHT = `calc(100vh - ${APP_BAR_HEIGHT} - ${BOARD_BAR_HEIGHT} - 12px)`
 const COLUMN_HEADER_HEIGHT = '46px'
 const COLUMN_FOOTER_HEIGHT = '48px'
+const BOARD_MENU_HEIGHT = `calc(100vh - ${APP_BAR_HEIGHT})`
+const BOARD_MENU_TITLE_HEIGHT = '54px'
 
 const theme = extendTheme({
   trello: {
@@ -13,7 +15,9 @@ const theme = extendTheme({
     boardBarHeight: BOARD_BAR_HEIGHT,
     boardContentHeight: BOARD_CONTENT_HEIGHT,
     columnHeaderHeight: COLUMN_HEADER_HEIGHT,
-    columnFooterHeight: COLUMN_FOOTER_HEIGHT
+    columnFooterHeight: COLUMN_FOOTER_HEIGHT,
+    boardMenuHeight: BOARD_MENU_HEIGHT,
+    boardMenuTitleHeight: BOARD_MENU_TITLE_HEIGHT
   },
   typography: {
     fontSize: 14,
@@ -112,6 +116,21 @@ const theme = extendTheme({
         root: {
           padding: '8px 12px 4px',
           '&:last-child': { paddingBottom: '4px' }
+        }
+      }
+    },
+    MuiList: {
+      styleOverrides: {
+        root: {
+          paddingTop: 0,
+          paddingBottom: 0
+        }
+      }
+    },
+    MuiAvatar: {
+      styleOverrides: {
+        img: {
+          height: 'auto'
         }
       }
     }

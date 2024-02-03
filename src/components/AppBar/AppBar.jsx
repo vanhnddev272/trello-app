@@ -41,7 +41,7 @@ function AppBar() {
         <AppsIcon sx={{ color: 'white' }}/>
         <Box onClick={() => navigate('/')} sx={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 0.5 }}>
           <SvgIcon component={TrelloLogo} inheritViewBox sx={{ color: 'white' }} />
-          <Typography variant='caption' sx={{ color: 'white', fontSize: '1.3rem', fontWeight: 'bold' }}>Trello</Typography>
+          <Typography variant='caption' sx={{ color: 'white', fontSize: '1.3rem', fontWeight: 'bold' }}>Trella</Typography>
         </Box>
         <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 1 }}>
           <Workspace />
@@ -119,7 +119,9 @@ function AppBar() {
             <NotificationsNoneIcon sx={{ color: 'white' }}/>
           </Badge>
         </Tooltip>
-        <HelpOutlineIcon sx={{ color: 'white' }}/>
+        <Tooltip title="Information">
+          <HelpOutlineIcon sx={{ color: 'white' }}/>
+        </Tooltip>
         <Profiles />
       </Box>
     </Box>

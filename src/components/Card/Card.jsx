@@ -1,16 +1,24 @@
 import Box from '@mui/material/Box'
 import Chip from '@mui/material/Chip'
 import Typography from '@mui/material/Typography'
-import { Card as MuiCard } from '@mui/material'
+import { IconButton, Card as MuiCard } from '@mui/material'
 import CardContent from '@mui/material/CardContent'
 import CardMedia from '@mui/material/CardMedia'
 import SubjectIcon from '@mui/icons-material/Subject'
 import AttachmentIcon from '@mui/icons-material/Attachment'
+import EditIcon from '@mui/icons-material/Edit'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
+import { useState } from 'react'
+import CardDetails from './CardDetails/CardDetails'
 
 
 function Card({ card }) {
+  const [isEditCard, setIsEditCard] = useState(false)
+  const [openDialog, setOpenDialog] = useState(false)
+  const isShowCardAction = () => {
+    return !!card?.description || !!card?.attachments
+  }
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: card._id, data: { ...card } })
   const dndKitCardStyle = {
     // touchAction: 'none', //For PointerSensor type
@@ -19,28 +27,56 @@ function Card({ card }) {
     opacity: isDragging ? 0.5 : undefined
   }
 
-  const isShowCardAction = () => {
-    return !!card?.description || !!card?.attachments
+  const openCardDetails = () => {
+    setOpenDialog(true)
+  }
+
+  const handleClose = () => {
+    setOpenDialog(false)
   }
 
   return (
     <MuiCard
       ref={setNodeRef}
       style={dndKitCardStyle} {...attributes} {...listeners}
+      onMouseEnter={() => setIsEditCard(true)}
+      onMouseLeave={() => setIsEditCard(false)}
       sx={{
+        display: card?.FE_PlaceholderCard ? 'none' : 'block',
+        position: 'relative',
         borderRadius: '8px',
         overflow: 'unset',
         bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#22272B' : 'white'),
-        '&:hover': { outline: '2px solid #388bff' },
-        display: card?.FE_PlaceholderCard ? 'none' : 'block'
+        '&:hover': { outline: '2px solid #388bff' }
       }}>
+      <IconButton
+        color="inherit"
+        onClick={openCardDetails}
+        sx={{
+          color: '#ffffff',
+          width: '32px',
+          height: '32px',
+          padding: '6px',
+          borderRadius: '16px',
+          display: isEditCard ? 'flex' : 'none',
+          position: 'absolute',
+          top: '2px',
+          right: '2px',
+          zIndex: 10,
+          '&:hover ': {
+            bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#A6C5E229' : '#f1f2f4')
+          }
+        }}
+      >
+        <EditIcon sx={{ color: (theme) => (theme.palette.mode === 'dark' ? '#9fadbc' : '#44546f'), fontSize: '14px' }}/>
+      </IconButton>
       {card?.cover && <CardMedia
         component="img"
         alt="green iguana"
         height="140"
         image={card?.cover}
       />}
-      <CardContent>
+      <CardContent sx={{ padding: card.description || card.attachments ? '' : '4px 12px 0 !important' }}>
         <Box sx={{ my: '4px' }}>
           <Typography gutterBottom>
             {card?.title}
@@ -73,6 +109,7 @@ function Card({ card }) {
       </CardContent>
       {/* <CardActions>
       </CardActions> */}
+      <CardDetails open={openDialog} onClose={handleClose} />
     </MuiCard>
   )
 }

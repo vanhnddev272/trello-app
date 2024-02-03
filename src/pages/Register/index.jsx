@@ -15,15 +15,16 @@ import { useNavigate } from 'react-router-dom'
 import { registerAPI } from '~/apis'
 import { joiResolver } from '@hookform/resolvers/joi'
 import { schema } from './validation'
+import { toast } from 'react-toastify'
 
 export default function Register() {
   const { control, handleSubmit, formState: { errors } } = useForm({ resolver: joiResolver(schema) })
   const navigate = useNavigate()
 
   const onSubmit = async (data) => {
-    const registerUser = await registerAPI(data)
-    console.log(registerUser)
-    navigate('/login')
+    await registerAPI(data)
+    toast.success('Registered successfully', { autoClose: 1000 })
+    setTimeout(() => navigate('/login'), 2000)
   }
 
   return (
