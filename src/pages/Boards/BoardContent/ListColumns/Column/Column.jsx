@@ -244,7 +244,7 @@ function Columns({ column, createNewCard, deleteColumn }) {
           </Menu>
         </Box>
 
-        <ListCards cards={orderedCards} />
+        <ListCards column={column} cards={orderedCards} />
 
         {!isOpenAddNewCard
           ? <Box

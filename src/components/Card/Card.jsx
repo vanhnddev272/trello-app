@@ -1,7 +1,8 @@
 import Box from '@mui/material/Box'
 import Chip from '@mui/material/Chip'
 import Typography from '@mui/material/Typography'
-import { IconButton, Card as MuiCard } from '@mui/material'
+import IconButton from '@mui/material/IconButton'
+import { Card as MuiCard } from '@mui/material'
 import CardContent from '@mui/material/CardContent'
 import CardMedia from '@mui/material/CardMedia'
 import SubjectIcon from '@mui/icons-material/Subject'
@@ -13,7 +14,7 @@ import { useState } from 'react'
 import CardDetails from './CardDetails/CardDetails'
 
 
-function Card({ card }) {
+function Card({ column, card }) {
   const [isEditCard, setIsEditCard] = useState(false)
   const [openDialog, setOpenDialog] = useState(false)
   const isShowCardAction = () => {
@@ -75,6 +76,7 @@ function Card({ card }) {
         alt="green iguana"
         height="140"
         image={card?.cover}
+        sx={{ borderTopLeftRadius: '8px', borderTopRightRadius: '8px' }}
       />}
       <CardContent sx={{ padding: card.description || card.attachments ? '' : '4px 12px 0 !important' }}>
         <Box sx={{ my: '4px' }}>
@@ -96,7 +98,7 @@ function Card({ card }) {
                 width: '16px',
                 height: '16px',
                 ml: '7px',
-                color: 'white',
+                color: (theme) => (theme.palette.mode === 'dark' ? '#9fadbc' : '#44546f'),
                 bgcolor: 'transparent',
                 border: 'none'
               }}
@@ -109,7 +111,7 @@ function Card({ card }) {
       </CardContent>
       {/* <CardActions>
       </CardActions> */}
-      <CardDetails open={openDialog} onClose={handleClose} />
+      <CardDetails column={column} card={card} open={openDialog} onClose={handleClose} />
     </MuiCard>
   )
 }
