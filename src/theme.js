@@ -72,7 +72,7 @@ const theme = extendTheme({
     MuiTypography: {
       styleOverrides: {
         root: ({ theme }) => ({
-          color: theme.palette.mode === 'dark' ? '#b6c2cf' : '',
+          color: theme.palette.mode === 'dark' ? '#b6c2cf' : '#172b4d',
           '&.MuiTypography-body1': { fontSize: '0.875rem' }
         })
       }
@@ -100,14 +100,6 @@ const theme = extendTheme({
       styleOverrides: {
         root: {
           boxShadow: '0px 1px 1px #091E4240, 0px 0px 1px #091E424F'
-        }
-      }
-    },
-    MuiCardMedia: {
-      styleOverrides: {
-        root: {
-          borderTopLeftRadius: '8px',
-          borderTopRightRadius: '8px'
         }
       }
     },

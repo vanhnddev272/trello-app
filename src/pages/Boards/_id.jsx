@@ -16,6 +16,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
 import { jwtDecode } from 'jwt-decode'
 import { refreshToken } from '~/redux/slices/userSlice'
+import CardDetails from '~/components/Card/CardDetails/CardDetails'
 
 function Board() {
   const [board, setBoard] = useState(null)
@@ -207,6 +208,7 @@ function Board() {
           deleteColumn={deleteColumn}
         />
       </Box>
+      {/* <CardDetails open='true' /> */}
     </Container>
   )
 }

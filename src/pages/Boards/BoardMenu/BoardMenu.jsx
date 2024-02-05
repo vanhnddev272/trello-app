@@ -24,6 +24,7 @@ import ShareIcon from '@mui/icons-material/Share'
 import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule'
 import { useState } from 'react'
 import { Avatar } from '@mui/material'
+import styled from '@emotion/styled'
 
 function CustomButton (props) {
   const { title, icon } = props

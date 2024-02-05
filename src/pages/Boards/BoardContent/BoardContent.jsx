@@ -202,7 +202,9 @@ function BoardContent({
           return nextColumns
         })
 
-        moveCardInTheSameColumn(dndOrderedCards, dndOrderedCardOrderIds, oldColumnWhenDraggingCard._id)
+        if (oldColumnWhenDraggingCard.cardOrderIds.toString() !== dndOrderedCardOrderIds.toString()) {
+          moveCardInTheSameColumn(dndOrderedCards, dndOrderedCardOrderIds, oldColumnWhenDraggingCard._id)
+        }
       }
     }
 
