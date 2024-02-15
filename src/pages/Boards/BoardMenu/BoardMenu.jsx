@@ -25,11 +25,13 @@ import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule'
 import { useState } from 'react'
 import { Avatar } from '@mui/material'
 import styled from '@emotion/styled'
+import { changeBoardBackgroundAPI } from '~/apis'
 
 function CustomButton (props) {
-  const { title, icon } = props
+  const { title, icon, changeBackground } = props
   return (
     <Button
+      onClick={changeBackground}
       variant='text'
       startIcon={icon}
       sx={{
@@ -48,7 +50,7 @@ function CustomButton (props) {
   )
 }
 
-function BoardMenu() {
+function BoardMenu({ board }) {
   const drawerWidth = 340
   const [open, setOpen] = useState(false)
 
@@ -58,6 +60,19 @@ function BoardMenu() {
 
   const handleDrawerClose = () => {
     setOpen(false)
+  }
+
+  const [file, setFile] = useState(board?.background)
+
+  const handleFileChange = (e) => {
+    if (e.target.files) {
+      setFile(e.target.files[0])
+    }
+  }
+  const uploadBackground = async () => {
+    const uploadData = new FormData()
+    uploadData.append('file', file)
+    await changeBoardBackgroundAPI(board._id, uploadData )
   }
 
   return (
@@ -146,7 +161,19 @@ function BoardMenu() {
           <CustomButton title='Archived items' icon={<BallotIcon />} />
           <Divider />
           <CustomButton title='Settings' icon={<SettingsIcon />} />
-          <CustomButton title='Change background' icon={<Avatar variant='square' src='/src/assets/bg2.png' />} />
+          <CustomButton title='Change background' icon={<Avatar variant='square' src={board?.background.slice(-1)} />} changeBackground={uploadBackground} />
+          {/* <input type="file" onChange={handleFileChange} /> */}
+          <Button
+            variant="contained"
+            component="label"
+          >
+            Upload Background
+            <input
+              type="file"
+              onChange={handleFileChange}
+              hidden
+            />
+          </Button>
           <CustomButton title='Custom Fields' icon={<AssignmentIcon />} />
           <CustomButton title='Automation' icon={<SmartToyIcon />} />
           <CustomButton title='Power-Ups' icon={<TrendingUpIcon />} />
@@ -161,7 +188,6 @@ function BoardMenu() {
           <CustomButton title='Close board' icon={<HorizontalRuleIcon />} />
         </MenuList>
       </Drawer>
-
     ))
   )
 }

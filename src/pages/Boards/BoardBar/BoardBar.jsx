@@ -194,7 +194,7 @@ function BoardBar({ loading, board }) {
             <Avatar alt="Remy Sharp" src='/src/assets/avt1.jpg' />
           </Tooltip>
         </AvatarGroup>
-        <BoardMenu />
+        <BoardMenu board={board} />
       </Box>
     </Box>
   )

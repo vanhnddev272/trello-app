@@ -193,7 +193,7 @@ function Board() {
       <AppBar />
       <Box
         sx={{
-          backgroundImage: `url(${bg})`,
+          backgroundImage: `url(${board?.background.slice(-1)})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center'
         }}>

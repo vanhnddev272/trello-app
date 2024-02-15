@@ -26,6 +26,10 @@ export const updateBoardAPI = async (boardId, updateData) => {
   return (await axios.put(`${API_ROOT}/v1/boards/${boardId}`, updateData)).data
 }
 
+export const changeBoardBackgroundAPI = async (boardId, updateData) => {
+  return (await axios.post(`${API_ROOT}/v1/boards/${boardId}/upload-bg`, updateData)).data
+}
+
 export const moveCardToDifferentColumnAPI = async (updateData) => {
   return (await axios.put(`${API_ROOT}/v1/boards/supports/move_card`, updateData)).data
 }
